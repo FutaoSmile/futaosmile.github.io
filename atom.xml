@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>UnderControl</title>
   
-  
+  <subtitle>aha</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://futaosmile.github.io/"/>
