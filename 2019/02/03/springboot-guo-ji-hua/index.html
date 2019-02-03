@@ -5,8 +5,12 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, keyword">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="springboot 国际化, keyword">
+    <meta name="description" content="# 定义国际化资源
+resources下新建i18n文件夹
+新建xx.properties文件
+中文：新建xx_zh_CN.properties文件存放对应的中文
+英文：新建xx_en_US.properties文件存放对应的英文效果是这样">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hello World | UnderControl</title>
+    <title>springboot 国际化 | UnderControl</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -278,13 +282,13 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Hello World
+                        springboot 国际化
                     </div>
                 </div>
             </div>
@@ -317,7 +321,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-01-26
+                    2019-02-03
                 </div>
 
                 
@@ -333,19 +337,175 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+                <h3 id="定义国际化资源"><a href="#定义国际化资源" class="headerlink" title="# 定义国际化资源"></a># 定义国际化资源</h3><ul>
+<li>resources下新建i18n文件夹</li>
+<li>新建xx.properties文件</li>
+<li>中文：新建xx_zh_CN.properties文件存放对应的中文</li>
+<li>英文：新建xx_en_US.properties文件存放对应的英文<br>效果是这样的:<br><img src="https://upload-images.jianshu.io/upload_images/1846623-8b85b05fa6735c41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+<li>定义需要国际化的内容</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/1846623-3dc555615998a052.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>在application.yml中配置</li>
+</ul>
+<pre class=" language-yml"><code class="language-yml">spring:
+  messages:
+    # 定义国际化文件的文件地址，读取的原则是顺序读取如果存在同名的则读取第一个
+    basename: i18n/login,i18n/errorMessage
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+<ul>
+<li>定义国际化解析器与拦截器</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>futao<span class="token punctuation">.</span>springmvcdemo<span class="token punctuation">.</span>foundation<span class="token punctuation">.</span>configuration<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Bean<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>LocaleResolver<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>i18n<span class="token punctuation">.</span>LocaleChangeInterceptor<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>i18n<span class="token punctuation">.</span>SessionLocaleResolver<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Locale<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * 通用bean注册管理中心
+ *
+ * @author futao
+ * Created on 2019-01-15.
+ */</span>
+<span class="token annotation punctuation">@org</span><span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Configuration
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Configuration</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 国际化，设置默认的语言为中文
+     * 将用户的区域信息存在session
+     * 也可以存在cookie,由客户端保存   {@link org.springframework.web.servlet.i18n.CookieLocaleResolver}
+     *
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> LocaleResolver <span class="token function">localeResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SessionLocaleResolver slr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SessionLocaleResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        slr<span class="token punctuation">.</span><span class="token function">setDefaultLocale</span><span class="token punctuation">(</span>Locale<span class="token punctuation">.</span>SIMPLIFIED_CHINESE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> slr<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 国际化，设置url识别参数
+     *
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> LocaleChangeInterceptor <span class="token function">localeChangeInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        LocaleChangeInterceptor lci <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LocaleChangeInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        lci<span class="token punctuation">.</span><span class="token function">setParamName</span><span class="token punctuation">(</span><span class="token string">"lang"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> lci<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+<ul>
+<li>国际化配置文件会被spring加载，所以可以通过spring容器获取到国际化文件里面的内容<ul>
+<li>获取spring容器</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>futao<span class="token punctuation">.</span>springmvcdemo<span class="token punctuation">.</span>utils<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>BeansException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>ApplicationContext<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>ApplicationContextAware<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Spring容器
+ *
+ * @author futao
+ * Created on 2019-01-15.
+ */</span>
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringUtils</span> <span class="token keyword">implements</span> <span class="token class-name">ApplicationContextAware</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> ApplicationContext context <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setApplicationContext</span><span class="token punctuation">(</span>ApplicationContext applicationContext<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>context <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            context <span class="token operator">=</span> applicationContext<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 获取容器
+     *
+     * @return 容器
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> ApplicationContext <span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> context<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+<ul>
+<li>在程序中使用</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//通过spring容器读取</span>
+SpringUtils<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span>code<span class="token punctuation">,</span> null<span class="token punctuation">,</span> LocaleContextHolder<span class="token punctuation">.</span><span class="token function">getLocale</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">//或者</span>
+    <span class="token annotation punctuation">@Resource</span>
+     <span class="token keyword">private</span> MessageSource messageSource<span class="token punctuation">;</span>
+     <span class="token keyword">return</span> messageSource<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span>code<span class="token punctuation">,</span> null<span class="token punctuation">,</span> LocaleContextHolder<span class="token punctuation">.</span><span class="token function">getLocale</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<ul>
+<li>写个工具类</li>
+</ul>
+<pre class=" language-java"><code class="language-java">
+<span class="token keyword">package</span> com<span class="token punctuation">.</span>futao<span class="token punctuation">.</span>springmvcdemo<span class="token punctuation">.</span>service<span class="token punctuation">.</span>notbusiness<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>futao<span class="token punctuation">.</span>springmvcdemo<span class="token punctuation">.</span>foundation<span class="token punctuation">.</span>LogicException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>futao<span class="token punctuation">.</span>springmvcdemo<span class="token punctuation">.</span>model<span class="token punctuation">.</span>system<span class="token punctuation">.</span>ErrorMessage<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>futao<span class="token punctuation">.</span>springmvcdemo<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>SpringUtils<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Logger<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>LoggerFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>NoSuchMessageException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>i18n<span class="token punctuation">.</span>LocaleContextHolder<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * 国际化
+ *
+ * @author futao
+ * Created on 2019-01-15.
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">I18nService</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Logger LOGGER <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>I18nService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 获取消息
+     * 也可以使用下面的方式：
+     * Resource private MessageSource messageSource;
+     * return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
+     *
+     * @param code k
+     * @return v
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> String <span class="token function">getMessage</span><span class="token punctuation">(</span>String code<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> SpringUtils<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span>code<span class="token punctuation">,</span> null<span class="token punctuation">,</span> LocaleContextHolder<span class="token punctuation">.</span><span class="token function">getLocale</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">NoSuchMessageException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            LOGGER<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"获取国际化资源{}失败"</span> <span class="token operator">+</span> e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> code<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> LogicException<span class="token punctuation">.</span><span class="token function">le</span><span class="token punctuation">(</span>ErrorMessage<span class="token punctuation">.</span>I18N_RESOURCE_NOT_FOUND<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>code<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>使用</li>
+</ul>
+<pre class=" language-java"><code class="language-java">I18nService<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token string">"welcome"</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li>前端在接口后面加上local信息<code>?lang=zh_CN</code>或者<code>?lang=en_US</code>即可</li>
+</ul>
+<p>源代码: <a href="https://github.com/FutaoSmile/springbootFramework" target="_blank" rel="noopener">https://github.com/FutaoSmile/springbootFramework</a><br>或者: <a href="https://gitee.com/FutaoSmile/springboot_framework" target="_blank" rel="noopener">https://gitee.com/FutaoSmile/springboot_framework</a><br>欢迎star~</p>
 
             </div>
             <hr>
@@ -486,7 +646,7 @@
                     </span>
                     <a href="https://futaosmile.github.io" class="b-link-green">UnderControl</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/01/26/hello-world/" class="b-link-green">Hello World</a>
+                    <a href="/2019/02/03/springboot-guo-ji-hua/" class="b-link-green">springboot 国际化</a>
                 </p>
             </div>
         </div>
@@ -509,7 +669,8 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/02/03/springboot-guo-ji-hua/">
                     <div class="card-image">
@@ -527,9 +688,9 @@ resources下新建i18n文件夹
 中文：新建xx_zh_CN.properties文件存放对应的中文
 英文：新建xx_en_US.properties文件存放对应的英文效果是这样</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-02-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-02-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -538,6 +699,7 @@ resources下新建i18n文件夹
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -545,7 +707,7 @@ resources下新建i18n文件夹
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2019/01/26/hello-world/">
@@ -571,7 +733,6 @@ resources下新建i18n文件夹
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

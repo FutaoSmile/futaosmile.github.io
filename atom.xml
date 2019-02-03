@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://futaosmile.github.io/"/>
-  <updated>2019-01-26T05:22:40.615Z</updated>
+  <updated>2019-02-03T11:50:46.852Z</updated>
   <id>https://futaosmile.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>springboot 国际化</title>
+    <link href="https://futaosmile.github.io/2019/02/03/springboot-guo-ji-hua/"/>
+    <id>https://futaosmile.github.io/2019/02/03/springboot-guo-ji-hua/</id>
+    <published>2019-02-03T11:45:15.000Z</published>
+    <updated>2019-02-03T11:50:46.852Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;定义国际化资源&quot;&gt;&lt;a href=&quot;#定义国际化资源&quot; class=&quot;headerlink&quot; title=&quot;# 定义国际化资源&quot;&gt;&lt;/a&gt;#
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
